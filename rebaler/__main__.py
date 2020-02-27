@@ -107,9 +107,9 @@ def main():
             output_result(final_assembly, circularity)
     else:
         unitig_graph = UnitigGraph(ref_names, unpolished_sequences, circularity)
-        unitig_graph.save_to_fasta(os.path.join(args.prefix, '.fa'))
-        unitig_graph.save_to_gfa(os.path.join(args.prefix, '.gfa'))
-        output_result(os.path.join(args.prefix, '.fa'), circularity)
+        unitig_graph.save_to_fasta(os.path.join(args.base_only_prefix, '.fa'))
+        unitig_graph.save_to_gfa(os.path.join(args.base_only_prefix, '.gfa'))
+        output_result(os.path.join(args.base_only_prefix, '.fa'), circularity)
 
     log.log('')
 
