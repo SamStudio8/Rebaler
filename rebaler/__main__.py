@@ -64,6 +64,10 @@ def get_arguments():
     optional_args.add_argument('--base-only', action='store_true',
                                help='If set, Rebaler will not attempt to polish the assembly '
                                     'with Racon, returning the unpolished assembly')
+    optional_args.add_argument('--base-only-prefix', type='str', default="rebaled",
+                               help='If using --base-only, use this string as the prefix'
+                               'to the unpolished assembly .fa and .gfa files.
+                               Do not add the . suffix [default: rebaled]')
 
     help_args = parser.add_argument_group('Help')
     help_args.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
@@ -102,7 +106,10 @@ def main():
             final_assembly = final_shred_and_polish(ref_names, circularity, polish_dir, args.threads)
             output_result(final_assembly, circularity)
     else:
-        output_result(unpolished_sequences, circularity)
+        unitig_graph = UnitigGraph(ref_names, unpolished_sequences, circularity)
+        unitig_graph.save_to_fasta(os.path.join(args.prefix, '.fa'))
+        unitig_graph.save_to_gfa(os.path.join(args.prefix, '.gfa'))
+        output_result(os.path.join(args.prefix, '.fa'), circularity)
 
     log.log('')
 
