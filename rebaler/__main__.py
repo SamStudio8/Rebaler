@@ -61,6 +61,9 @@ def get_arguments():
     optional_args.add_argument('--random', action='store_true',
                                help='If a part of the reference is missing, replace it with random '
                                     'sequence (default: leave it as the reference sequence)')
+    optional_args.add_argument('--base-only', action='store_true',
+                               help='If set, Rebaler will not attempt to polish the assembly '
+                                    'with Racon, returning the unpolished assembly')
 
     help_args = parser.add_argument_group('Help')
     help_args.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
@@ -91,11 +94,13 @@ def main():
         unpolished_sequences = ref_seqs
     else:
         unpolished_sequences = build_unpolished_assembly(args, reference, ref_names, ref_seqs)
-    with tempfile.TemporaryDirectory() as polish_dir:
-        polishing_rounds(ref_names, unpolished_sequences, circularity, args.reads, args.threads,
-                         polish_dir)
-        final_assembly = final_shred_and_polish(ref_names, circularity, polish_dir, args.threads)
-        output_result(final_assembly, circularity)
+
+    if not args.base_only:
+        with tempfile.TemporaryDirectory() as polish_dir:
+            polishing_rounds(ref_names, unpolished_sequences, circularity, args.reads, args.threads,
+                            polish_dir)
+            final_assembly = final_shred_and_polish(ref_names, circularity, polish_dir, args.threads)
+            output_result(final_assembly, circularity)
 
     log.log('')
 
