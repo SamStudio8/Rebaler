@@ -65,9 +65,9 @@ def get_arguments():
                                help='If set, Rebaler will not attempt to polish the assembly '
                                     'with Racon, returning the unpolished assembly')
     optional_args.add_argument('--base-only-prefix', type='str', default="rebaled",
-                               help='If using --base-only, use this string as the prefix'
-                               'to the unpolished assembly .fa and .gfa files.
-                               Do not add the . suffix [default: rebaled]')
+                               help='If using --base-only, use this string as the prefix '
+                               'to the unpolished assembly .fa and .gfa files. '
+                               'Do not add the . suffix [default: rebaled]')
 
     help_args = parser.add_argument_group('Help')
     help_args.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
