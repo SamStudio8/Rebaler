@@ -101,6 +101,8 @@ def main():
                             polish_dir)
             final_assembly = final_shred_and_polish(ref_names, circularity, polish_dir, args.threads)
             output_result(final_assembly, circularity)
+    else:
+        output_result(unpolished_sequences, circularity)
 
     log.log('')
 
