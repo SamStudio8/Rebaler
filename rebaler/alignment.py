@@ -105,7 +105,7 @@ class Alignment(object):
                 read_seq_end = read_pos
 
             if i == 'M':
-                if ref_seq[ref_pos] == self.read_seq[read_pos]:
+                if ref_seq[ref_pos].upper() == self.read_seq[read_pos].upper():
                     match_count += 1
                 read_pos += 1
                 ref_pos += 1
